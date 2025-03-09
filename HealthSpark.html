@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>E-BMI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f9f5ff;
+        }
+
+        header {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eaeaea;
+        }
+
+        header img {
+            height: 50px;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            padding: 10px 20px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #f2c94c;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #333;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 0;
+            width: 250px;
+            z-index: 1000;
+        }
+
+        .dropdown ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dropdown ul li {
+            padding: 10px 20px;
+            text-align: left;
+        }
+
+        .dropdown ul li:hover {
+            background-color: #444;
+        }
+
+        .nav-item:hover .dropdown {
+            display: block;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .cta-buttons a {
+            background-color: #f2c94c;
+            color: #1a1a1a;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .cta-buttons a:hover {
+            background-color: #d8a51d;
+            transform: scale(1.05);
+        }
+
+        .hero {
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            color: #fff;
+            text-align: left;
+            padding: 120px 20px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hero-text {
+            max-width: 50%;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+        }
+
+        .buttons a {
+            background-color: #f2c94c;
+            color: #1a1a1a;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .buttons a:hover {
+            background-color: #d8a51d;
+        }
+
+        .hero img {
+            width: 300px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .content, .section {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .content h2, .section h3 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .content p, .section p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            color: #666;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .content .buttons a, .section a {
+            background-color: #5c67f2;
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .content .buttons a:hover, .section a:hover {
+            background-color: #4a54e1;
+        }
+
+        .section {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            background-color: #f9f9f9;
+            padding: 60px 20px;
+        }
+
+        .section img {
+            max-width: 500px;
+            margin: 20px;
+            border-radius: 20px;
+        }
+
+        .footer {
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            color: #fff;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .footer h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .footer .stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer .stats div {
+            margin: 0 20px;
+            text-align: center;
+        }
+
+        .footer .stats div h3 {
+            font-size: 2em;
+        }
+
+        .footer .stats div p {
+            font-size: 1.2em;
+        }
+
+        .tabcontent {
+            display: none;
+        }
+
+
+        .tabcontent.active {
+            display: block;
+        }
+
+
+        .tablinks.active {
+            color: #f2c94c;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text {
+                max-width: 100%;
+            }
+
+            .hero img {
+                width: 80%;
+                margin-top: 20px;
+                margin-left: 0;
+            }
+
+            .section {
+                flex-direction: column;
+            }
+
+            .footer .stats {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img alt="Logo" src="images/Modern.png"/>
+        <nav>
+            <div class="nav-item">
+                <a href="#">HealthSpark</a>
+                <div class="dropdown">
+                    <ul>
+                        <li><a href="#" class="tablinks" onclick="openCity(event, 'Overview')">Overview</a></li>
+                        <li><a href="#" class="tablinks" onclick="openCity(event, 'Features')">Features</a></li>
+                        <li><a href="#" class="tablinks" onclick="openCity(event, 'CaseStudies')">Case Studies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="#">About us</a>
+                <div class="dropdown">
+                    <ul>
+                        <li><a href="#" class="tablinks" onclick="openCity(event, 'Members')">Members</a></li>
+                        <li><a href="#" class="tablinks" onclick="openCity(event, 'Concerns')">Concerns</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="cta-buttons">
+            <a href="#">Log in</a>
+            <a href="#">Sign up</a>
+        </div>
+    </header>
+
+    <div id="Overview" class="tabcontent">
+        <section class="hero">
+            <div class="hero-text">
+                <h1>There's never been a better time to become the greatest gigachad</h1>
+                <p>with plenty of knowledge in your BMI weight. It's all you need to be the greatest</p>
+            </div>
+            <img alt="the gigan" src="https://s3.ap-south-1.amazonaws.com/kukufm/channel_icons/79a7d2026e944bd3b3e8b0e6f1bcbb14.png"/>
+        </section>
+
+        <section class="content">
+            <h2>App named HealthSpark</h2>
+            <p>what makes it different</p>
+        </section>
+        <section class="section">
+            <div>
+                <h3>BMI range</h3>
+                <p>the estimated body fat based on height and weight</p>
+            </div>
+            <img alt="what kind of image" src="https://lakeshealth.org/wp-content/uploads/2020/05/Body-Mass-Index-thumbnail.png"/>
+        </section>
+
+        <section class="footer">
+            <h2>Join Our Team</h2>
+            <div class="stats">
+                <div>
+                    <h3>Innovation</h3>
+                    <p>Leading the way with cutting-edge technology.</p>
+                </div>
+                <div>
+                    <h3>Collaboration</h3>
+                    <p>Working together to achieve common goals.</p>
+                </div>
+                <div>
+                    <h3>Growth</h3>
+                    <p>Continuous learning and professional development.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div id="Members" class="tabcontent">
+        <section class="content">
+            <h2>Members of the HealthSpark squad</h2>
+        </section>
+    
+        <section class="section">
+            <div>
+                <h3>Charluiz Ramos</h3>
+                <p>Programmer</p>
+            </div>
+            <img alt="Anonymous" src="https://scontent.fmnl25-6.fna.fbcdn.net/v/t39.30808-6/254074418_1101377750606375_5156068408796247805_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFsmBZsz6hPRdbY1-CpG9zkGmaed2bllLQaZp53ZuWUtNbcHvHZh4kGYMoNatH46wkX1xg6s203RsR8sVs7lxUC&_nc_ohc=DWBaxk47AjQQ7kNvgE-lt6d&_nc_zt=23&_nc_ht=scontent.fmnl25-6.fna&_nc_gid=AbQX_7e-Ky8cBYa4udktsmx&oh=00_AYB6Gu5QWMu6dcF1elqVaBcO5jRjOOh1KK0-mItKxSbhJQ&oe=675A4176"/>
+        </section>
+
+        <section class="section">
+            <div>
+                <h3>James Carl</h3>
+                <p>Leader</p>
+            </div>
+            <img alt="Anonymous" src="https://via.placeholder.com/500x300.png?text=Research+Areas"/>
+        </section>
+
+        <section class="section">
+            <div>
+                <h3>Lance Espiritu</h3>
+                <p>Asst.Leader</p>
+            </div>
+            <img alt="Anonymous" src="https://via.placeholder.com/500x300.png?text=Research+Areas"/>
+        </section>
+
+        <section class="section">
+            <div>
+                <h3>Rainnier Rodriguez</h3>
+                <p>Researcher</p>
+            </div>
+            <img alt="Anonymous" src="https://via.placeholder.com/500x300.png?text=Research+Areas"/>
+        </section>
+
+        <section class="section">
+            <div>
+                <h3>Ian Jimenez</h3>
+                <p>Researcher & Asst.Programmer</p>
+            </div>
+            <img alt="Anonymous" src="https://via.placeholder.com/500x300.png?text=Research+Areas"/>
+        </section>
+
+        <section class="section">
+            <div>
+                <h3>Anika Amber</h3>
+                <p>Researcher</p>
+            </div>
+            <img alt="Anonymous" src="https://via.placeholder.com/500x300.png?text=Research+Areas"/>
+        </section>
+    
+        <section class="footer">
+            <h2>Join Our Team</h2>
+            <div class="stats">
+                <div>
+                    <h3>Innovation</h3>
+                    <p>Leading the way with cutting-edge technology.</p>
+                </div>
+                <div>
+                    <h3>Collaboration</h3>
+                    <p>Working together to achieve common goals.</p>
+                </div>
+                <div>
+                    <h3>Growth</h3>
+                    <p>Continuous learning and professional development.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div id="Concerns" class="tabcontent">
+        <section class="content">
+            <h2>Concerns</h2>
+            <p>We prioritize sustainability, ethics, and community engagement in all our projects.</p>
+        </section>
+
+        <section class="section">
+            <div>
+                <h3>#1 Concern</h3>
+                <p>we didn't really have our first defense only mock defense so the features are a little less but more features will be added soon</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div>
+                <h3>#2 Concern</h3>
+                <p>I could have done to add more functions regarding about the app and for the website if my time wasn't consumed because not only i needed to learn more about 
+                    the sql database for the c# too, not only that i had to take care of family matters and it was not great and i'm the only one doing the app and the website
+                    because i thought i could handle it all i wish i stay true to it.</p>
+            </div>
+       </section>
+    
+        <section class="footer">
+            <h2>Join Us in Making a Difference</h2>
+            <div class="stats">
+                <div>
+                    <h3>Integrity</h3>
+                    <p>Committed to ethical practices.</p>
+                </div>
+                <div>
+                    <h3>Responsibility</h3>
+                    <p>Taking accountability for our actions.</p>
+                </div>
+                <div>
+                    <h3>Community</h3>
+                    <p>Building stronger communities together.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="Features" class="tabcontent">
+        <section class="content">
+            <h2>The Features of our App</h2>
+            <p>Since our app is based on BMI calculators we made sure to add features that would make it completely different from one another but it won't change any outcome but in a way that will help them change for the better!</p>
+            <div class="buttons">
+                <a href="#">Updates will be soon!</a>
+            </div>
+        </section>
+    
+        <section class="section">
+            <div>
+                <h3>#1 Feature</h3>
+                <p>Of course all BMI have this, the BMI calculator that gives tips depending on your age and gender and of course gives you tips depending on the result that you get</p>
+            </div>
+            <img alt="Research Areas" src="dude/broski.png">
+        </section>
+
+        <section class="section">
+            <div>
+                <h3>COMING SOON</h3>
+            </div>
+            <img alt="Anonymous" src="https://via.placeholder.com/500x300.png?text=Research+Areas"/>
+        </section>
+
+        <section class="section">
+            <div>
+                <h3>COMING SOON</h3>
+            </div>
+            <img alt="Anonymous" src="https://via.placeholder.com/500x300.png?text=Research+Areas"/>
+        </section>
+    
+        <section class="footer">
+            <h2>Join Us in Making a Difference</h2>
+            <div class="stats">
+                <div>
+                    <h3>Integrity</h3>
+                    <p>Committed to ethical practices.</p>
+                </div>
+                <div>
+                    <h3>Responsibility</h3>
+                    <p>Taking accountability for our actions.</p>
+                </div>
+                <div>
+                    <h3>Community</h3>
+                    <p>Building stronger communities together.</p>
+                </div>
+            </div>
+    </div>
+
+    <div id="CaseStudies" class="tabcontent">
+        <section class="content">
+            <h2>What this app all about</h2>
+            <p>The goal of this app is to examine whether the user will be satisfied or dissatisfied after knowing their BMI</p>
+            <div class="buttons">
+                <a href="#">Learn More</a>
+            </div>
+        </section>    
+        <section class="footer">
+            <h2>Join Us in Making a Difference</h2>
+            <div class="stats">
+                <div>
+                    <h3>Integrity</h3>
+                    <p>Committed to ethical practices.</p>
+                </div>
+                <div>
+                    <h3>Responsibility</h3>
+                    <p>Taking accountability for our actions.</p>
+                </div>
+                <div>
+                    <h3>Community</h3>
+                    <p>Building stronger communities together.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var event = new Event('click');
+            document.querySelector('.tablinks').dispatchEvent(event);
+        });
+
+        function openCity(evt, cityName) {
+
+            var tabcontent = document.querySelectorAll(".tabcontent");
+            tabcontent.forEach(content => content.classList.remove('active'));
+            
+
+            var tablinks = document.querySelectorAll(".tablinks");
+            tablinks.forEach(link => link.classList.remove('active'));
+            
+
+            document.getElementById(cityName).classList.add("active");
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
